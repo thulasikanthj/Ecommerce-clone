@@ -8,9 +8,35 @@
 </head>
 <body>
   <header>
-    <h1>ShopEasy</h1>
-    <button id="cart-btn">🛒 Cart (<span id="cart-count">0</span>)</button>
-  </header>
+  <div class="left-header">
+    <h1 class="logo">🛍️ ShopEasy</h1>
+    <button class="nav-btn">Home</button>
+    <span class="location">📍 Kuppam, India</span>
+  </div>
+
+  <div class="right-header">
+    <select id="category-select">
+      <option value="all">All Categories</option>
+      <option value="tshirt">T-Shirts</option>
+      <option value="jeans">Jeans</option>
+      <option value="shoes">Sneakers</option>
+      <option value="watch">Watches</option>
+      <option value="cap">Caps</option>
+    </select>
+
+    <input type="text" id="search-input" placeholder="Search products..." />
+    <button id="favorites-btn">❤️</button>
+    <button id="cart-btn">🛒 (<span id="cart-count">0</span>)</button>
+    <button id="login-btn">Login</button>
+    <button id="register-btn">Register</button>
+  </div>
+</header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h2>Welcome to Thulasikanth Store </h2>
+    <p>Your one-stop fashion store. Trendy. Affordable. Fast.</p>
+  </section>
 
   <main>
     <div class="product-container" id="product-list">
@@ -29,4 +55,5 @@
 
   <script src="script.js"></script>
 </body>
+
 </html>

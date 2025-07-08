@@ -4,26 +4,26 @@ const products = [
   { id: 3, name: "Black Sneakers", price: 1299, image: "blacksneakers.jpg" },
   { id: 4, name: "Metal Watch", price: 1499, image: "metalwatch.jpg" },
   { id: 5, name: "Red Cap", price: 299, image:"redcap.jpg"},
-   { id: 1, name: "White T-shirt", price: 299, image: "whitetshirt.jpg" },
-  { id: 2, name: "Black Jeans", price: 1999, image: "blackjeans.jpg" },
-  { id: 3, name: "Red Sneakers", price: 1999, image: "red sneakers.jpg" },
-  { id: 4, name: "Fastrack Watch", price: 1699, image: "fastrackwatch.jpg" },
-  { id: 5, name: "Blue Cap", price: 499, image:"bluecap.jpg"},
-   { id: 1, name: "Yellow T-shirt", price: 399, image: "yellowtshirt.jpg" },
-  { id: 2, name: "Tone Jeans", price: 1999, image: "tonejeans.jpg" },
-  { id: 3, name: "White Sneakers", price: 1399, image: "whitesneakers.jpg" },
-  { id: 4, name: "Sonata Watch", price: 2499, image: "sonatawatch.jpg" },
-  { id: 5, name: "Mixed Cap", price: 399, image:"mixedcap.jpg"},
-   { id: 1, name: "Blue T-shirt", price: 499, image: "bluetshirt.jpg" },
-  { id: 2, name: "Brown Jeans", price: 999, image: "brownjeans.jpg" },
-  { id: 3, name: "Sneakers", price: 1299, image: "sneakers.jpg" },
-  { id: 4, name: "Black Watch", price: 1499, image: "blackwatch.jpg" },
-  { id: 5, name: "tone Cap", price: 299, image:"tonecap.jpg"},
-   { id: 1, name: "Black T-shirt", price: 499, image: "blacktshirt.jpg" },
-  { id: 2, name: "Green Jeans", price: 999, image: "greenjeans.jpg" },
-  { id: 3, name: "Sneakers", price: 1299, image: "trendysneakers.jpg" },
-  { id: 4, name: "Strap Watch", price: 1499, image: "strapwatch.jpg" },
-  { id: 5, name: "Black Cap", price: 299, image:"blackcap.jpg" },
+   { id: 6, name: "White T-shirt", price: 299, image: "whitetshirt.jpg" },
+  { id: 7, name: "Black Jeans", price: 1999, image: "blackjeans.jpg" },
+  { id: 8, name: "Red Sneakers", price: 1999, image: "red sneakers.jpg" },
+  { id: 9, name: "Fastrack Watch", price: 1699, image: "fastrackwatch.jpg" },
+  { id: 10, name: "Blue Cap", price: 499, image:"bluecap.jpg"},
+   { id: 11, name: "Yellow T-shirt", price: 399, image: "yellowtshirt.jpg" },
+  { id: 12, name: "Tone Jeans", price: 1999, image: "tonejeans.jpg" },
+  { id: 13, name: "White Sneakers", price: 1399, image: "whitesneakers.jpg" },
+  { id: 14, name: "Sonata Watch", price: 2499, image: "sonatawatch.jpg" },
+  { id: 15, name: "Mixed Cap", price: 399, image:"mixedcap.jpg"},
+   { id: 16, name: "Blue T-shirt", price: 499, image: "bluetshirt.jpg" },
+  { id: 17, name: "Brown Jeans", price: 999, image: "brownjeans.jpg" },
+  { id: 18, name: "Sneakers", price: 1299, image: "sneakers.jpg" },
+  { id: 19, name: "Black Watch", price: 1499, image: "blackwatch.jpg" },
+  { id: 20, name: "tone Cap", price: 299, image:"tonecap.jpg"},
+   { id: 21, name: "Black T-shirt", price: 499, image: "blacktshirt.jpg" },
+  { id: 22, name: "Green Jeans", price: 999, image: "greenjeans.jpg" },
+  { id: 23, name: "Sneakers", price: 1299, image: "trendysneakers.jpg" },
+  { id: 24, name: "Strap Watch", price: 1499, image: "strapwatch.jpg" },
+  { id: 25, name: "Black Cap", price: 299, image:"blackcap.jpg" },
 ];
 
 let cart = [];
@@ -51,21 +51,54 @@ function renderProducts() {
 
 function addToCart(id) {
   const product = products.find(p => p.id === id);
-  cart.push(product);
+  if (product) {
+    cart.push(product);
+    updateCart();
+  }
+}
+
+function removeFromCart(index) {
+  cart.splice(index, 1);
   updateCart();
 }
 
 function updateCart() {
   cartCount.textContent = cart.length;
   cartItems.innerHTML = "";
+
+  let total = 0;
+
   cart.forEach((item, index) => {
+    total += item.price;
+
     const li = document.createElement('li');
-    li.textContent = `${item.name} - ₹${item.price}`;
+    li.innerHTML = `
+      ${item.name} - ₹${item.price}
+      <button onclick="removeFromCart(${index})" style="margin-left:10px;">❌</button>
+    `;
     cartItems.appendChild(li);
   });
+
+  const totalLi = document.createElement('li');
+  totalLi.innerHTML = `<strong>Total: ₹${total}</strong>`;
+  cartItems.appendChild(totalLi);
 }
 
 cartBtn.onclick = () => cartModal.classList.remove('hidden');
 closeModal.onclick = () => cartModal.classList.add('hidden');
 
 renderProducts();
+const categorySelect = document.getElementById("category-select");
+
+categorySelect.addEventListener("change", () => {
+  const value = categorySelect.value;
+  if (value === "all") {
+    filteredProducts = [...products];
+  } else {
+    filteredProducts = products.filter(product =>
+      product.name.toLowerCase().includes(value)
+    );
+  }
+  renderProducts();
+});
+
